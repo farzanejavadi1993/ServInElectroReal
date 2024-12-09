@@ -12,7 +12,7 @@ data class GenresRemote(
 
 data class GenreEntityRemote(
     @SerializedName("id")
-    val id: String ?=null,
+    val id: String ,
     @SerializedName("name")
     val name: String ?=null,
 )

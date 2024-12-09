@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface GenresLocalDataSource {
     fun getGenresLocal(): Flow<List<GenreLocal>>
 
-    suspend fun insertGenreLocal(genresLocal: GenreLocal)
+    suspend fun insertGenreLocal(genresLocal: List<GenreLocal>)
 
     fun sizeGenresLocal(): Int
 }

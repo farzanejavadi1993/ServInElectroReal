@@ -4,11 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.servinelectroreal.domain.entity.GenreEntity
 import com.example.servinelectroreal.domain.usecase.GetGenreEntityUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
@@ -19,7 +15,7 @@ class MVIViewModel @Inject constructor(
 
     private val state = MVIState.Loading
 
-    private val _stateFlow = MutableStateFlow<MVIState<Nothing>>(state)
+    private val _stateFlow = MutableStateFlow<MVIState>(state)
     val stateFlow = _stateFlow.asStateFlow()
 
 
@@ -27,29 +23,18 @@ class MVIViewModel @Inject constructor(
         when (intent) {
             MVIIntent.GetGenresList -> {
                 getGenreEntityUseCase.getGenreEntity().collect {
-
-                    if (it.size == 0) {
-                        _stateFlow.emit(MVIState.Error)
-                    } else {
-                        _stateFlow.emit(MVIState.GenreEntity(it.get(0).name.toString()))
-                    }
-
-
+                    _stateFlow.emit(MVIState.GenreEntityState(it))
                 }
 
-
             }
-
-
         }
     }
 }
 
-sealed class MVIState<out R>{
-    data object Loading : MVIState<Nothing>()
-    data object Error : MVIState<Nothing>()
-    data class Success<out T>(val data: T) : MVIState<T>()
-    data class GenreEntity(var result: String) : MVIState<Nothing>()
+sealed class MVIState {
+    data object Loading : MVIState()
+    data object Error : MVIState()
+    data class GenreEntityState(val genreEntity: List<GenreEntity>) : MVIState()
 }
 
 sealed class MVIIntent {

@@ -25,7 +25,4 @@ object RemoteModule {
         return retrofit.create(GenreRemoteInterface::class.java)
     }
 
-    @Singleton
-    @Provides
-    fun provideApiHelper(remoteServiceImpl: RemoteServiceImpl): RemoteService = remoteServiceImpl
 }

@@ -14,7 +14,6 @@ interface GenreDao {
     @Query("SELECT * FROM genre_table")
     fun getGenresLocal(): Flow<List<GenreLocal>>
 
-    @Query("SELECT COUNT(*) FROM genre_table")
-     fun sizeGenresLocal(): Int
+
 
 }

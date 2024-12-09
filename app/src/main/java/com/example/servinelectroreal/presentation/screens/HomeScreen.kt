@@ -13,19 +13,18 @@ import com.example.servinelectroreal.ui.theme.ServInElectroRealTheme
 
 @Composable
 fun Greeting(vm: MVIViewModel ) {
-    val state = vm.stateFlow.collectAsState()
+    val state = vm.stateFlow.collectAsState().value
 
     LaunchedEffect(Unit) {
         vm.handelIntent(MVIIntent.GetGenresList)
     }
 
-
-    when (state.value) {
-
-        is MVIState.Loading -> Text("Loading")
-        MVIState.Error -> Text("Error")
-        is MVIState.GenreEntity -> Text("Product: ${(state as MVIState.GenreEntity).result}")
-        MVIState.Success -> Text("Success")
+    when(state){
+        MVIState.Error -> Text("ERROR")
+        is MVIState.GenreEntityState -> Text(state.genreEntity.first().name?:"Hallo")
+        MVIState.Loading ->Text("Loading")
     }
+
+
 
 }

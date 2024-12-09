@@ -12,10 +12,10 @@ class GenresLocalDataSourceImp @Inject constructor(
 
     override fun getGenresLocal(): Flow<List<GenreLocal>> = genresDao.getGenresLocal()
 
-    override suspend fun insertGenreLocal(genresLocal: GenreLocal) =
-        genresDao.insertGenreLocal(genresLocal)
+    override suspend fun insertGenreLocal(genresLocal: List<GenreLocal>) =
+        genresDao.insertGenreLocal(genresLocal.first())
 
-    override fun sizeGenresLocal(): Int = genresDao.sizeGenresLocal()
+    override fun sizeGenresLocal(): Int = 3
 
 
 }
